@@ -1,0 +1,129 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	/* Margin bottom by footer height */
+	background-color: #073642;
+}
+.header {
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	top: 0;
+	padding: 10px 0;
+	background-color: white;
+}
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 90px;
+	padding: 25px 0;
+	background-color: #ffffff;
+}
+.content {
+	padding: 60px 0 90px 0;
+}
+.nav > li > a {
+	color: #6c71c4;
+}
+.nav > li > a:hover {
+	color: #d33682;
+	background-color: #fff;
+}
+.nav > .nav-header {
+	font-size: 19px;
+	font-weight: 500;
+	margin: 5px 10px 0px 0px;
+}
+.nav-header > a#chat {
+	color: #073642;
+	padding: 1px 0;
+	transition: color 100ms;
+}
+.nav-header > a#chat:focus, .nav-header > a#chat:hover {
+	background-color: #fff;
+}
+.nav-header >  a#chat:hover {
+	color: #6c71c4;
+	/*color: #d33682;*/
+}
+header .user {
+	color: #839496;
+	margin: 10px 0;
+}
+.user {
+	transition: color 1000ms;
+}
+.user:hover {
+	color: #6c71c4;
+}
+.user > .glyphicon {
+	margin-right: 7px;
+}
+.user > input.user-name {
+	display: inline-block;
+	border: none;
+	font-weight: 500;
+}
+.user > input:hover {
+	color: #073642;
+	cursor: pointer;
+}
+.user > input:focus {
+	outline: none;
+	box-shadow: none;
+	color: #073642;
+}
+.messages {
+	padding: 10px;
+	overflow: scroll;
+}
+.message {
+	font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+	color: #657b83;
+	margin: 0;
+}
+.message > span + span {
+	margin-left: 8px;
+}
+.message > .message-time {
+	color: #586e75;
+	display: inline-block;
+	min-width: 67px;
+	text-align: right;
+}
+.message > .message-author {
+	color: #268bd2;
+}
+.message > .message-text {
+	color: #859900;
+	word-break: break-all;
+}
+.compose-input {
+	border: 0;
+	box-shadow: none;
+	font-size:15px;
+}
+.compose-input:focus {
+	outline: none;
+	box-shadow: none;
+}
+.crash {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.crash-message {
+	position: absolute;
+	top: 50%;
+	margin-top:-25px;
+	line-height: 50px;
+	width: 100%;
+	text-align: center;
+	color: #dc322f;
+	font-size: 21px;
+}

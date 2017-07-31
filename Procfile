@@ -1,0 +1,2 @@
+web: proxy
+worker: chat
