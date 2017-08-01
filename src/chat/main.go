@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	addr      = flag.String("listen", ":8080", "address to bind to")
+	addr      = flag.String("listen", ":3333", "address to bind to")
 	debug     = flag.String("pprof", "", "address for pprof http")
 	workers   = flag.Int("workers", 128, "max workers count")
 	queue     = flag.Int("queue", 1, "workers task queue size")

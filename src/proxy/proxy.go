@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"io"
 	"log"
 	"net"
@@ -8,15 +9,13 @@ import (
 	"os"
 )
 
+var (
+	addr     = flag.String("listen", ":8888", "port to listen")
+	chatAddr = flag.String("chat_addr", "localhost:3333", "chat tcp addr to proxy pass")
+)
+
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
-	chat := os.Getenv("CHATPORT")
-	if chat == "" {
-		log.Fatal("$CHATPORT must be set")
-	}
+	flag.Parse()
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatalf("can not get os working directory: %v", err)
@@ -26,15 +25,22 @@ func main() {
 
 	http.Handle("/", web)
 	http.Handle("/web/", http.StripPrefix("/web/", web))
-	http.Handle("/ws", wsHandler(":"+chat))
+	http.Handle("/ws", upstream("chat", "tcp", *chatAddr))
 
-	log.Printf("proxy is listening on localhost:%v", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Printf("proxy is listening on %q", *addr)
+	log.Fatal(http.ListenAndServe(*addr, nil))
 }
 
-func wsHandler(upstream string) http.Handler {
+func upstream(name, network, addr string) http.Handler {
+	if conn, err := net.Dial(network, addr); err != nil {
+		log.Fatalf("test upstream %q error: %v", name, err)
+	} else {
+		log.Printf("upstream %q ok", name)
+		conn.Close()
+	}
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		peer, err := net.Dial("tcp", upstream)
+		peer, err := net.Dial(network, addr)
 		if err != nil {
 			log.Printf("dial upstream error: %v", err)
 			w.WriteHeader(502)

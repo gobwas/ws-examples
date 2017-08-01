@@ -1,2 +1,1 @@
-web: bin/proxy
-worker: bin/chat -listen=":$CHATPORT"
+web: script/bootstrap.sh
