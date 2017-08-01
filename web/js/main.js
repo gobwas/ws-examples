@@ -1,4 +1,9 @@
-var Connection = new Client("ws://localhost:8080/ws");
+function getWebSocketEndpoint() {
+	var h = window.location.href.split("/")
+	return "ws" + h[0].replace("http", "") + "//" + h[2] + "/ws";
+}
+
+var Connection = new Client(getWebSocketEndpoint());
 
 var Messages = {
 	list: [],
@@ -101,54 +106,60 @@ var App = {
 				m("a", { href: route, oncreate: m.route.link }, caption) 
 			])
 		}
+
+		var items = [
+			m(".col-xs-7", [
+				m("ul.nav.nav-pills", [
+					m("li.nav-header", {role: "presentation"}, [
+						m("a#chat", { href: "/chat", oncreate: m.route.link }, "GoChat"),
+					]),
+					nav("/about", "about"),
+				]),
+			])
+		]
+
+		if (Bootstrap.ready) {
+			items.push(m(".col-xs-5.text-right", [
+				m("form.user", {
+					onsubmit: function(e) {
+						e.preventDefault()
+						if (User.name.length != 0) {
+							Bootstrap.rename()
+						}
+					}	
+				}, [
+					m("span.glyphicon.glyphicon-user"),
+					m("span.user-prefix", "@"),
+					m("input.user-name", {
+						value: User.name,
+						oncreate: function(vnode) {
+							vnode.dom.style.width = textWidth(vnode.dom.value)
+						},
+						onfocus: function(e) {
+							var prev = this.value
+							setTimeout(function() {
+								e.target.value = prev
+							}, 1)
+						},
+						oninput: function(e) {
+							var el = e.target
+							User.name = el.value
+							el.style.width = textWidth(el.value)
+						},
+						onchange: function(e) { 
+							if (User.name.length != 0) {
+								Bootstrap.rename()
+							}
+						}
+					}),
+				])
+			]))
+		}
+
 		return [
 			m("header.header", [
 				m("div.container", [
-					m(".row", [
-						m(".col-xs-7", [
-							m("ul.nav.nav-pills", [
-								m("li.nav-header", {role: "presentation"}, [
-									m("a#chat", { href: "/chat", oncreate: m.route.link }, "GoChat"),
-								]),
-								nav("/about", "about"),
-							]),
-						]),
-						m(".col-xs-5.text-right", [
-							m("form.user", {
-								onsubmit: function(e) {
-									e.preventDefault()
-									if (User.name.length != 0) {
-										Bootstrap.rename()
-									}
-								}	
-							}, [
-								m("span.glyphicon.glyphicon-user"),
-								m("span.user-prefix", "@"),
-								m("input.user-name", {
-									value: User.name,
-									oncreate: function(vnode) {
-										vnode.dom.style.width = textWidth(vnode.dom.value)
-									},
-									onfocus: function(e) {
-										var prev = this.value
-										setTimeout(function() {
-											e.target.value = prev
-										}, 1)
-									},
-									oninput: function(e) {
-										var el = e.target
-										User.name = el.value
-										el.style.width = textWidth(el.value)
-									},
-									onchange: function(e) { 
-										if (User.name.length != 0) {
-											Bootstrap.rename()
-										}
-									}
-								}),
-							])
-						])
-					])
+					m(".row", items)
 				])
 			]),
 			m("div.container.content", [
@@ -160,8 +171,9 @@ var App = {
 
 function textWidth(text) {
 	var ret = 0;
-	var temp = document.getElementById("temp");
-	m.render(temp, m("div", {
+	var div = document.createElement('div');
+	document.body.appendChild(div);
+	m.render(div, m("div", {
 		oncreate: function(vnode) {
 			ret = vnode.dom.clientWidth;
 		},
@@ -177,8 +189,12 @@ function textWidth(text) {
 			"width":       "auto",
 			"white-space": "nowrap"
 		},
-	}, text))
-	return ret + 5 + "px"
+	}, text));
+
+	ret = ret + 5 + "px";
+	document.body.removeChild(div);
+
+	return ret
 }
 
 var Message = {
