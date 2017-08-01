@@ -1,2 +1,2 @@
-web: proxy
-worker: chat
+web: bin/proxy
+worker: bin/chat
