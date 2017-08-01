@@ -1,0 +1,15 @@
+[submodule "vendor/src/golang.org/x/sys"]
+	path = vendor/src/golang.org/x/sys
+	url = https://go.googlesource.com/sys
+[submodule "vendor/src/github.com/gobwas/pool"]
+	path = vendor/src/github.com/gobwas/pool
+	url = https://github.com/gobwas/pool.git
+[submodule "vendor/src/github.com/gobwas/ws"]
+	path = vendor/src/github.com/gobwas/ws
+	url = https://github.com/gobwas/ws.git
+[submodule "vendor/src/github.com/gobwas/httphead"]
+	path = vendor/src/github.com/gobwas/httphead
+	url = https://github.com/gobwas/httphead.git
+[submodule "vendor/src/github.com/mailru/easygo"]
+	path = vendor/src/github.com/mailru/easygo
+	url = https://github.com/mailru/easygo.git
