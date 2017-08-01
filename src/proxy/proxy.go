@@ -13,25 +13,22 @@ func main() {
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
-	chat := os.Getenv("CHAT")
+	chat := os.Getenv("CHATPORT")
 	if chat == "" {
-		log.Fatal("$CHAT must be set")
+		log.Fatal("$CHATPORT must be set")
 	}
-
 	wd, err := os.Getwd()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("can not get os working directory: %v", err)
 	}
-	index, err := indexHandler(wd)
-	if err != nil {
-		log.Fatal(err)
-	}
+
 	web := http.FileServer(http.Dir(wd + "/web"))
 
-	http.Handle("/", index)
+	http.Handle("/", web)
 	http.Handle("/web/", http.StripPrefix("/web/", web))
-	http.Handle("/ws", wsHandler(chat))
+	http.Handle("/ws", wsHandler(":"+chat))
 
+	log.Printf("proxy is listening on localhost:%v", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
@@ -39,10 +36,12 @@ func wsHandler(upstream string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		peer, err := net.Dial("tcp", upstream)
 		if err != nil {
+			log.Printf("dial upstream error: %v", err)
 			w.WriteHeader(502)
 			return
 		}
 		if err := r.Write(peer); err != nil {
+			log.Printf("write request to upstream error: %v", err)
 			w.WriteHeader(502)
 			return
 		}

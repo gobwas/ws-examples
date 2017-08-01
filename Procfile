@@ -1,2 +1,2 @@
 web: bin/proxy
-worker: bin/chat
+worker: bin/chat -listen=":$CHATPORT"
