@@ -5,11 +5,8 @@ chat_port=3333
 ./bin/chat -listen=":${chat_port}" &
 chat_pid=$!
 for t in $(yes "1" | head -n 5); do
-	ls -la /proc/${chat_pid}/fd/
-	cat /proc/net/tcp
-	cat /proc/net/tcp6
-
-	if $(cat /proc/${chat_pid}/net/tcp | grep --quite LISTEN); then
+	sock=$(ls -la /proc/${chat_pid}/fd/ | fgrep 'socket' | awk '{print $4}')
+	if [ ! -z "$sock" ]; then
 		break
 	fi
 	sleep $t

@@ -33,7 +33,7 @@ func main() {
 
 func upstream(name, network, addr string) http.Handler {
 	if conn, err := net.Dial(network, addr); err != nil {
-		log.Fatalf("test upstream %q error: %v", name, err)
+		log.Printf("warning: test upstream %q error: %v", name, err)
 	} else {
 		log.Printf("upstream %q ok", name)
 		conn.Close()
