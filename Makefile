@@ -13,6 +13,4 @@ proxy:
 vendor:
 	git submodule init; \
 	git submodule update; \
-	echo "OK"
-
 
