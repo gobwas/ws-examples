@@ -11,10 +11,8 @@ proxy:
 	GOPATH="$(GO_PATH)" go build -o ./bin/proxy ./src/proxy 
 
 vendor:
-	if [ ! -d ./vendor ]; then \
-		git submodule init; \
-		git submodule update; \
-	fi; \
+	git submodule init; \
+	git submodule update; \
 	echo "OK"
 
 
