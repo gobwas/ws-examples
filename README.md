@@ -12,6 +12,8 @@
 
 # Notes
 
+## Commands
+
 Currently these commands are developed:
 - `bin/chat` the chat application, which is listening raw tcp socket and
   handles [jsonrpc]-like messages.
@@ -20,7 +22,20 @@ Currently these commands are developed:
   running chat app. This is done only for running on heroku, where only one port
   is able to be exported.
 
+## Building
+
 All commands can be built by `make *` or by just `make`.
+
+The directory structure is convinient for [gb](https://getgb.io/docs/usage/)
+vendoring tool. But instead of using `gb` git submodules are used to vendor
+dependencies. Thus, `make vendor` will update existing submodules.
+
+> Also, `gb` directory structure is here to signal the heroku buildpack to use
+> appropriate build logic.
+
+I will write notice in README.md now and make appropriate target in Makefile.
+
+Thanks!
 
 Chat application deployed [here][website-url].
 
