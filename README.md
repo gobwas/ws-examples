@@ -33,10 +33,6 @@ dependencies. Thus, `make vendor` will update existing submodules.
 > Also, `gb` directory structure is here to signal the heroku buildpack to use
 > appropriate build logic.
 
-I will write notice in README.md now and make appropriate target in Makefile.
-
-Thanks!
-
 Chat application deployed [here][website-url].
 
 [website-image]: https://img.shields.io/website-up-down-green-red/http/vast-beyond-95791.herokuapp.com.svg?label=running-example
