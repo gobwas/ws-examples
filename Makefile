@@ -1,8 +1,11 @@
 GO_PATH=$(PWD):$(PWD)/vendor:$(GOPATH)
 
-.PHONY: vendor
+.PHONY: vendor cli
 
 all: vendor chat proxy
+
+cli:
+	GOPATH="$(GO_PATH)" go build -o ./bin/cli ./src/chat/client
 
 chat:
 	GOPATH="$(GO_PATH)" go build -o ./bin/chat ./src/chat 
