@@ -84,7 +84,7 @@ func (u *User) readRequest() (*Request, error) {
 		return nil, err
 	}
 	if h.OpCode.IsControl() {
-		return nil, wsutil.ControlHandler(u.conn, ws.StateServerSide)(h, r)
+		return nil, wsutil.ControlFrameHandler(u.conn, ws.StateServerSide)(h, r)
 	}
 
 	req := &Request{}
