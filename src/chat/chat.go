@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"gopool"
 	"io"
 	"math/rand"
 	"net"
@@ -11,6 +10,8 @@ import (
 	"strconv"
 	"sync"
 	"time"
+
+	"gopool"
 
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"

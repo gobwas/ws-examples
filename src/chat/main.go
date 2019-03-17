@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
-	"gopool"
 	"log"
 	"net"
 	"time"
+
+	"gopool"
 
 	"github.com/gobwas/ws"
 	"github.com/mailru/easygo/netpoll"
