@@ -236,9 +236,9 @@ var Compose = {
 									value: Message.text,
 									placeholder: "Write a message...",
 									autocomplete: "off",
-									oninput: m.withAttr("value", function(value) { 
-										Message.text = value
-									})
+									oninput: function (e) { 
+										Message.text = e.target.value
+									}
 								})
 							])
 						]),
