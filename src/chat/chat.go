@@ -250,14 +250,13 @@ func (c *Chat) writer() {
 	for bts := range c.out {
 		c.mu.RLock()
 		us := c.us
-		c.mu.RUnlock()
-
 		for _, u := range us {
 			u := u // For closure.
 			c.pool.Schedule(func() {
 				u.writeRaw(bts)
 			})
 		}
+		c.mu.RUnlock()
 	}
 }
 
